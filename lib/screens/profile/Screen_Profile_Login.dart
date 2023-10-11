@@ -61,12 +61,13 @@ class ScreenProfileLogin extends StatelessWidget {
  );
  },
  style: ElevatedButton.styleFrom(
- backgroundColor: Colors.black,
- minimumSize: const Size(double.infinity, 50.0), // Ancho máximo
- ),
- child: Text(
+  minimumSize: const Size(double.infinity, 50.0), // Ancho máximo
+  shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0))
+                              ),
+ child: const Text(
  'Log In',
- style: const TextStyle(fontSize: 20.0,color: Colors.white ),
+ style: TextStyle(fontSize: 20.0 ),
  ),
  ),
  SizedBox(height: 20.0),
@@ -83,11 +84,10 @@ class ScreenProfileLogin extends StatelessWidget {
  context,MaterialPageRoute(builder: (context) => const ScreenSignUp())
  );
  },
- child: Text(
+ child: const Text(
  'Sign Up',
- style: const TextStyle(
+ style: TextStyle(
  fontSize: 18.0,
- color: Colors.red,
  ),
  ),
  ),

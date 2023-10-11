@@ -1,31 +1,39 @@
+import 'package:e_commerce/config/services/auth_service.dart';
+import 'package:e_commerce/navigations/Tabbar.dart';
+import 'package:e_commerce/screens/email/widgets/Screen_Email.dart';
+import 'package:e_commerce/screens/password/Screen_Password.dart';
 import 'package:flutter/material.dart';
 
-void main() {
-  runApp(const MyApp());
+class ScreenProfileUsername extends StatefulWidget {
+  const ScreenProfileUsername({super.key});
+
+  @override
+  State<ScreenProfileUsername> createState() => _ScreenProfileUsernameState();
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class _ScreenProfileUsernameState extends State<ScreenProfileUsername> {
 
-//AppBar widget
   @override
   Widget build(BuildContext context) {
+    AuthService authService = AuthService();
+    String username = authService.getEmail() ?? "Email";
+
     PreferredSizeWidget appBar = AppBar(
-      backgroundColor: Colors.purple,
-      title: const Row(
+      backgroundColor:const Color.fromARGB(216, 107, 45, 117),
+      title: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          Icon(
+         const Icon(
             Icons.person_rounded,
             color: Color.fromARGB(199, 255, 255, 255),
             size: 50.0,
           ),
-          SizedBox(
+          const SizedBox(
             width: 40,
           ),
           Text(
-            "Username",
-            style: TextStyle(color: Colors.white, fontSize: 32),
+           username,
+            style: const TextStyle(color: Colors.white, fontSize: 18),
           ),
         ],
       ),
@@ -33,9 +41,12 @@ class MyApp extends StatelessWidget {
     );
 
 //filledButton Widget
-    Widget filledButtonFun(String value) {
+    Widget filledButtonFun(String value,Widget widget) {
       return FilledButton.tonal(
-        onPressed: () {},
+        onPressed: () {
+           Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => widget));
+        },
         style: ButtonStyle(
             shape: MaterialStatePropertyAll(RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(5.0))),
@@ -47,7 +58,13 @@ class MyApp extends StatelessWidget {
 
     Widget elevatedButtonFun(String value) {
       return ElevatedButton(
-        onPressed: () {},
+        onPressed: () async {
+          await authService.logout();
+          if (mounted) {
+            Navigator.pushReplacement(context,
+                MaterialPageRoute(builder: (context) => const Tabbar()));
+          }
+        },
         style: ButtonStyle(
             backgroundColor: MaterialStateProperty.all(Colors.black),
             foregroundColor: MaterialStateProperty.all(Colors.white),
@@ -73,7 +90,7 @@ class MyApp extends StatelessWidget {
             ),
           ),
           useMaterial3: true),
-      title: 'Uasername',
+      title: 'Username',
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: appBar,
@@ -84,15 +101,15 @@ class MyApp extends StatelessWidget {
               const SizedBox(
                 height: 50,
               ),
-              filledButtonFun("Change Email"),
+              filledButtonFun("Change Email",const ScreenEmail()),
               const SizedBox(
                 height: 30,
               ),
-              filledButtonFun("Change Password"),
+              filledButtonFun("Change Password",const ScreenChangePassword()),
               const SizedBox(
                 height: 30,
               ),
-              filledButtonFun("Change Photo"),
+              filledButtonFun("Change Photo",const Tabbar()),
               const SizedBox(
                 height: 125,
               ),
@@ -102,5 +119,6 @@ class MyApp extends StatelessWidget {
         ),
       ),
     );
+    
   }
 }

@@ -2,7 +2,12 @@ import 'package:e_commerce/firebase_options.dart';
 import 'package:e_commerce/navigations/Tabbar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> f381b94aa23eb9fa1b791183711129edcfe86f86
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);

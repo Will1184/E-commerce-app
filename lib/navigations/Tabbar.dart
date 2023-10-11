@@ -1,6 +1,12 @@
+<<<<<<< HEAD
 import 'package:e_commerce/screens/categories/categories_screen.dart';
 import 'package:e_commerce/screens/profile/Screen_Profile_Login.dart';
+=======
+import 'package:e_commerce/screens/profile/Screen_Profile.dart';
+import 'package:e_commerce/screens/screen_categories.dart';
+>>>>>>> f381b94aa23eb9fa1b791183711129edcfe86f86
 import 'package:e_commerce/screens/home/screenhomewidgets.dart';
+import 'package:fluid_bottom_nav_bar/fluid_bottom_nav_bar.dart';
 import 'package:flutter/material.dart';
 
 class Tabbar extends StatefulWidget {
@@ -10,61 +16,72 @@ class Tabbar extends StatefulWidget {
 }
 
 class _TabbarState extends State<Tabbar> {
-  int _selectedTab = 0;
+  Widget? _child;
+  @override
+  void initState() {
+    _child = const ScreenHome();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _selectedTab,
-        onTap: (index){
-          setState(() {
-            _selectedTab=index;
-          });
-        },
-        items: const [
-          BottomNavigationBarItem(
-              icon: Icon(Icons.home_outlined,size: 40,),
-          label:"Home",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.apps_outlined,size: 40,),
-            label:"Category",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.shopping_cart_outlined,size: 40,),
-            label:"Shopping Cart",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_2_outlined,size: 40,),
-            label:"Profile",
-          ),
+      body: _child,
+      bottomNavigationBar: FluidNavBar(
+        icons: [
+          FluidNavBarIcon(
+              icon: Icons.home,
+              backgroundColor:const Color.fromARGB(216, 107, 45, 117),
+              extras: {'label': 'Inicio'}),
+          FluidNavBarIcon(
+              icon: Icons.apps_sharp,
+              backgroundColor:const Color.fromARGB(216, 107, 45, 117),
+              extras: {'label': 'Otra Página'}),
+          FluidNavBarIcon(
+              icon: Icons.shopping_cart_rounded,
+              backgroundColor:const Color.fromARGB(216, 107, 45, 117),
+              extras: {'label': 'Perfil'}),
+          FluidNavBarIcon(
+              icon: Icons.person,
+              backgroundColor: const Color.fromARGB(216, 107, 45, 117),
+              extras: {'label': 'Carrito'}),
+        ],
+        style: const FluidNavBarStyle(
 
-        ],
-      ),
-      body:  Stack(
-        children: [
-         renderView(
-           0,
-           const ScreenHome(),),
-          renderView(
-            1,
-            const ScreenCategories(),),
-          renderView(
-            2,
-            const ScreenCategories(),),
-          renderView(
-            3,
-            const ScreenProfileLogin(),),
-        ],
+          iconSelectedForegroundColor:Color.fromARGB(255, 225,190, 231),
+          iconUnselectedForegroundColor: Color.fromARGB(255, 225,190, 231),
+          barBackgroundColor: Color.fromARGB(216, 107, 45, 117),
+          iconBackgroundColor: Colors.transparent,
+          
+        ),
+        scaleFactor: 1.5,
+        defaultIndex: 0,
+        onChange: _handleNavigationChange,
       ),
     );
   }
-  Widget renderView(int tabIndex,Widget view){
-    return  IgnorePointer(
-      ignoring: _selectedTab !=tabIndex,
-      child: Opacity(opacity: _selectedTab == tabIndex ? 1 : 0,
-        child: view,
-      ),
-    );
+
+  void _handleNavigationChange(int index) {
+    setState(() {
+      switch (index) {
+        case 0:
+          _child = const ScreenHome();
+        case 1:
+          _child = const ScreenCategories();
+          break;
+        case 2:
+          _child = const ScreenCategories();
+          break;
+        case 3:
+          _child = const ScreenProfile();
+          break;
+      }
+      _child = AnimatedSwitcher(
+        switchInCurve: Curves.easeInOut,
+        switchOutCurve: Curves.easeIn,
+        duration: const Duration(milliseconds: 600),
+        child: _child,
+      );
+    });
   }
 }
