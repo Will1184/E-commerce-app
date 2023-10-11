@@ -1,3 +1,7 @@
+import 'package:e_commerce/screens/categories/categories_screen_four.dart';
+import 'package:e_commerce/screens/categories/categories_screen_one.dart';
+import 'package:e_commerce/screens/categories/categories_screen_three.dart';
+import 'package:e_commerce/screens/categories/categories_screen_two.dart';
 import 'package:flutter/material.dart';
 
 class ScreenCategories extends StatelessWidget {
@@ -50,31 +54,47 @@ class ScreenCategories extends StatelessWidget {
                 crossAxisSpacing: 10.0,
                 children: [
                   CustomButton(
-                    icon: Icons.image,
+                    imagePath: 'assets/images/20.jpeg',
                     text: 'Botón 1',
                     onPressed: () {
                       // Acción al presionar el botón
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CategoriesScreenOne()));
                     },
                   ),
                   CustomButton(
-                    icon: Icons.image,
+                    imagePath: 'assets/images/28.jpeg',
                     text: 'Botón 2',
                     onPressed: () {
                       // Acción al presionar el botón
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CategoriesScreenTwo()));
                     },
                   ),
                   CustomButton(
-                    icon: Icons.image,
+                    imagePath: 'assets/images/18.jpeg',
                     text: 'Botón 3',
                     onPressed: () {
                       // Acción al presionar el botón
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CategoriesScreenThree()));
                     },
                   ),
                   CustomButton(
-                    icon: Icons.image,
+                    imagePath: 'assets/images/34.jpeg',
                     text: 'Botón 4',
                     onPressed: () {
                       // Acción al presionar el botón
+                      Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const CategoriesScreenFour()));
                     },
                   ),
                 ],
@@ -88,12 +108,12 @@ class ScreenCategories extends StatelessWidget {
 }
 
 class CustomButton extends StatelessWidget {
-  final IconData icon;
+  final String imagePath;
   final String text;
   final VoidCallback onPressed;
 
   const CustomButton({
-    required this.icon,
+    required this.imagePath,
     required this.text,
     required this.onPressed,
   });
@@ -101,24 +121,25 @@ class CustomButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      borderRadius: BorderRadius.circular(10.0),
-      color: Colors.black,
+      borderRadius: BorderRadius.circular(5.0),
+      color: Colors.white,
       child: InkWell(
         onTap: onPressed,
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Icon(
-              icon,
-              size: 40,
-              color: Colors.white,
+            Flexible(
+              child: Image.asset(
+                imagePath,
+                fit: BoxFit.contain,
+              ),
             ),
-            SizedBox(height: 10.0),
+            SizedBox(height: 1),
             Text(
               text,
               style: TextStyle(
                 fontSize: 16,
-                color: Colors.white,
+                color: Colors.black,
               ),
             ),
           ],
